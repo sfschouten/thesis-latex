@@ -1,0 +1,95 @@
+\chapter{Conclusion \& Discussion}
+\label{ch:conclusion}
+
+% Answer the research question
+% Refer back to motivation of work
+% Then relate back to other work
+% Highlight sections with most changes
+
+% (RQ1) to what extent can type-information improve Link Prediction performance? and,
+% (RQ2) what method of incorporating the type-information is most effective?
+
+This chapter will outline the conclusions that may be drawn from the results of the experiments. They will be followed by some additional remarks, either detailing what else we may conclude from the results, or discussing how the results relate to previous investigations. 
+
+
+\section*{Answering the Research Question}
+
+%The central question we sought to answer in this thesis is as follows:
+\begin{quote}
+    \input{snippets/research_question}
+\end{quote}
+%
+%By only embedding types instead of entities 
+By embedding a type for each entity instead of the entity itself 
+%\todo{rephrase? make clear that this is not to be taken too literally, the emphasis should be that entities of the same type do not have separate embeddings}%
+-- which was an unintended effect of both the type-mean and type-attentive methods for some datasets -- we can get Link Prediction performance that is well beyond what seems possible otherwise. 
+The improvement in MRR against the non-semantic baseline ranges from 261\% (for WN18RR) to 56\% (for CoDEx-M). 
+From this we can conclude that type-information can greatly improve Link Prediction performance.
+
+The second question asks what method is most effective.
+When judged by our primary objective, which was Link Prediction performance, it is clear that for most datasets the type-attentive method is best. 
+By representing entities by their most representative types, the method can exploit the type-information to obtain great Link Prediction performance.
+The results on WN18RR, where the type-attentive-alt variant results in the highest MRR, shows that including the entity in the keys and values of the attention mechanism may yield even greater performance. Although the results of this method on the other datasets shows that this variant is less likely to find the low-entropy mode that makes the high MRR possible in the first place. If a way can be found to reliably find the low-entropy mode (see the Future Work section below) this variant may be superior.
+
+\section*{Further Remarks}
+
+\subsection{Additional Objectives}
+In Section \ref{sec:method:objectives} we identified two additional objectives, the first of which was the ability to utilize Knowledge Graph Embeddings for downstream tasks. For that objective the type-attentive method seems less suited. For a lot of these tasks it is important that we actually learn a separate embedding for each entity, but as discussed previously, when the type-attentive method performs well it effectively only learns type-embeddings. 
+Thus, despite a much more modest gain in MRR, the type-embedprior seems the better option when suitability for downstream tasks is important.
+
+The other objective we identified was the ability to embed entities using their type(s) that were not seen during training. The type-mean can certainly do this, but that is all it can do, in essence it treats all entities as unseen entities, using only their type(s) for the embedding. Type-attentive still uses an entity representation to calculate the attention weights, so embedding unseen entities would be non-trivial. It might be possible to drop out the entity-specific representation during training so the model may learn to deal with this case effectively. 
+Using the type-embedprior to embed unseen entities is also non-trivial, but for this method there is no mechanism at all to decide how to combine the distributions of the entity's types. Only if the unseen entity has just one type (or we know which is most representative) can we use the type-embedprior by simply sampling from that type's distribution.
+
+
+\subsection{Comparing experimental results with \mycite{ma2017transt}}
+
+In \cite{ma2017transt} TransT's performance for Link Prediction is tested on the outdated FB15K and WN18 datasets (see Section \ref{sec:method_type_linkprior}).
+%
+Furthermore, it is not clear that the baselines against which TransT was compared were run using the same experimental setup. From their code-base it seems that the baselines' performance came from previously reported numbers.
+
+Both of these shortcomings are addressed in our experiments. We report the performance of the TransT configuration which \citeauthor{ma2017transt} refer to as `type information' (see Section \ref{sec:transt}).
+We show that this method only outperforms the baseline on FB15K-237.
+\citeauthor{ma2017transt} report an improvement in Mean Rank and Hits@10 on the WN18 dataset, we do not see the same for the WN18RR dataset.
+
+%\todo{rho lower than what TransT paper set it}
+
+\subsection{A prior on links: Type-linkprior(-only) vs. Type-attentive}
+
+When the type-attentive model learns a low-entropy distribution over types -- effectively choosing one type per entity as the most-representative -- it no longer truly learns to embed entities, instead it only learns to embed types.
+%
+The type-linkprior and type-linkprior-only methods also do not try to incorporate type-information in entity-embeddings, but instead (re-)weigh the likelihood of triples being true.
+%
+However, of these two methods the type-attentive embedder is clearly the superior in terms of Link Prediction performance (see Table \ref{tab:hyperparam-search-results1}). If we wanted to model a type-based prior probability over links, then a separate KGE that uses the type-attentive embedder would be a far better choice than using the type-linkprior. 
+
+%\subsection{}
+
+\section*{Future Work}
+
+\subsection{Taming the type-attentive[-alt] embedder}
+
+In its current form, the type-attentive embedder is somewhat unpredictable, it exhibits substantially different behavior depending on whether it reached a low- or high-entropy mode (see Section \ref{sec:experiments:type_attentive}).
+Say we want to use the type-attentive embedder in its low-entropy mode, then currently we have no way of making sure that this is what it learns.
+Only when a particularly high learning rate is chosen for the attention mechanism does the model occasionally reach a well performing low-entropy state. 
+%The same is true for the high-entropy mode, as it stands we are unable to study this mode for all datasets, because we cannot control when it finds the low-entropy or high-entropy modes.
+
+The most obvious way to address this problem is to constrain the entropy of the distributions produced by the attention mechanism directly.
+By doing this we can: produce high-entropy attention distributions to test if the originally intended behavior of the type-attentive embedder is useful; and produce low-entropy attention distributions to reliably reproduce the observed `most-representative type per entity' behavior.
+
+
+\subsection{Combining type-attentive and type-embedprior}
+
+Given the striking Link Prediction results of the type-mean and type-attentive models, it would make sense to explore ways of using their strengths while addressing their shortcomings. The main shortcoming of these methods is that they do not allow for learning of entity-specific embeddings. Instead they reduce the problem to learning only type-embeddings, and in the case of the type-attentive model, learning a most-representative type per entity.
+
+To improve upon this we might take inspiration from the type-embedprior. It tries to learn both type-embeddings and entity-embeddings, the main intuition being that encouraging entities of the same type to be close to each other in the embedding space may be beneficial. However, in practice this resulted in only a modest improvement (see Section \ref{sec:experiments:results}).
+It is possible that this is because there was not enough `signal' available for the type-distributions. This would explain why the added benefit we observe is so much less than that observed by \mycite{hao2019joie}, who supervise the type-embeddings with links from an ontology (meta-relations). 
+
+Instead of using links from an ontology -- which are available only for select datasets -- we could use the regular links from the knowledge graph, using the type-attentive embedder to obtain a most-representative type per entity with which to translate entity-to-entity links into type-to-type links. These links could be used to supervise either the distances between the type-distributions' means $\mu$, or to supervise the type-distributions using distance metrics like those used by \mycite{he_learning_2015}.
+
+Another version of this would forego the probabilistic aspect of the type-embeddings entirely. Thereby obtaining a method even closer to that of \citeauthor{hao2019joie} (the only difference being the use of links from the knowledge graph, rather than the ontology).
+
+
+\subsection{Extending to other KGE methods}
+Our experiments have been exclusively in combination with TransE. 
+It will be useful to perform experiments in combination with other KGE methods. 
+Investigating the generalization of our methodology to non-geometric KGE methods is of particular interest.
+%\todo{OPTIONAL: finish. something about differences between geometric and tensor decomposition methods that could make it tricky to combine with the type-embedprior in particular}

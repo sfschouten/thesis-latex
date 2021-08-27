@@ -1,0 +1,212 @@
+\chapter{Appendices}
+\label{ch:appendices}
+
+\clearpage
+\section{Details hyper-parameter searches}
+\label{apx:hyperparameter_search}
+
+
+\subsection{Parameters - Training}
+Like \citeauthor{ruffinelli_you_2019} we also use a learning rate schedule based on PyTorch's ReduceLROnPlateau class, with a reduction factor of 0.95, and a lower threshold of 0.0001.
+Table \ref{tab:hyperparams-training} list the training hyper-parameters that were tuned, and the values that were considered.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        \textit{parameter}  & \textit{values}               \\
+        \cmidrule{1-2}
+        batch size          & 128, 256, 512, 1024              \\
+        optimizer           & Adam, Adagrad                 \\
+        learning rate (lr)  & [0.0001, 1.]                  \\
+        lr schedule patience& [0, 10]                       \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:hyperparams-training}
+    \caption{The hyper-parameters relating to the training process.}
+\end{table}
+
+\subsection{Parameters - Embeddings}
+If a run uses `xavier\_normal' or `xavier\_uniform' the gain is always 1.0, if `normal' is used the mean is always 0.0 .
+Table \ref{tab:hyperparams-embedding} list the embedding hyper-parameters that were tuned, and the values that were considered.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        \textit{parameter}              & \textit{values}                   \\
+        \cmidrule{1-2}
+        dimensions                      & 128, 256, 512                     \\
+        initialization                  & xavier\_normal, xavier\_uniform,  \\
+                                        & normal, uniform \\
+        initialization.normal.std       & [0.00001, 1.0]                    \\
+        initialization.uniform.a        & [-1.0, -0.00001]                  \\
+        \cmidrule{1-2}
+        regularization                  & none, l1, l2, l3                  \\
+        regularization.weighted         & True, False                       \\
+        regularization.weight $\dagger$ & [1.0e-20, 1.0e-01]                \\
+        \cmidrule{1-2}
+        dropout $\dagger$               & True, False                       \\
+        dropout.prob $\dagger$          & [0.0, 0.5]                        \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:hyperparams-embedding}
+    \caption[The hyper-parameters relating to the embeddings.]{The hyper-parameters relating to the embeddings. Parameters marked with a $\dagger$ are parameters that are set separately for each kind of embedding (entity, relation, type).}
+\end{table}
+
+\subsection{Parameters - TransE and negative-sampling}
+We use a `shared' implementation of negative-sampling, meaning that the same negative samples are used for each triple in a batch. Note that it is ensured that a triple does not get itself as a negative.
+Table \ref{tab:hyperparams-transe} list the TransE and negative-sampling hyper-parameters that were tuned, and the values that were considered.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        \textit{parameter}          & \textit{values}   \\
+        \cmidrule{1-2}
+        l-norm                      & 1.0, 2.0          \\
+        normalize.p $\dagger$       & None, 2.0  \\
+        \cmidrule{1-2}
+        num-negative-samples.s      & [1, 1000] \\
+        num-negative-samples.o      & [1, 1000] \\
+        \bottomrule
+    \end{tabular}
+    \vspace{1cm}
+    \label{tab:hyperparams-transe}
+    \caption[The hyper-parameters relating to TransE and negative sampling.]{The hyper-parameters relating to TransE and negative sampling. Parameters marked with a $\dagger$ are parameters that are set separately for each kind of embedding (entity, relation, type).}
+\end{table}
+
+\subsection{Parameters - Type-linkprior}
+Table \ref{tab:hyperparams-linkprior} list the Type-linkprior hyper-parameters that were tuned, and the values that were considered.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        \textit{parameter}          & \textit{values}   \\
+        \cmidrule{1-2}
+        $\lambda_{head}$            & [0.0, 1.0]        \\
+        $\lambda_{relation}$        & [0.0, 1.0]        \\
+        $\lambda_{tail}$            & [0.0, 1.0]        \\
+        $\rho$                      & [0.0, 1.0]        \\
+        learn-$\lambda$             & True, False       \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:hyperparams-linkprior}
+    \caption[The hyper-parameters relating to the Type-linkprior method.]{The hyper-parameters relating to the Type-linkprior method. }
+\end{table}
+
+
+
+\subsection{Parameters - Type-mean}
+The only hyper-parameter specific to the type-mean methods is the `use\_entity\_embedder' that determines if we are using the entity-specific offsets as described in \ref{sec:methods:type_mean}. 
+
+
+\subsection{Parameters - Type-attentive}
+Table \ref{tab:hyperparams-attentive} list the Type-attentive hyper-parameters that were tuned, and the values that were considered.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        \textit{parameter}                & \textit{values}   \\
+        \cmidrule{1-2}
+        type\_attn\_nr\_heads              & 1, 2, 4, 8        \\
+        type\_attn\_lr                    & [0.0001, 1.0]     \\
+        \cmidrule{1-2}
+        mutual\_information\_min          & [-20.0, 20.0]%
+        \tablefootnote{Negative values disable the mutual information constraint.}       \\
+        mutual\_information\_min\_scale   & [0.01, 100.0]      \\
+        mutual\_information\_min\_damping & [0.01, 100.0]      \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:hyperparams-attentive}
+    \caption[The hyper-parameters relating to the Type-attentive method.]{The hyper-parameters relating to the Type-attentive method. }
+\end{table}
+
+
+
+\subsection{Parameters - Type-embedprior}
+Table \ref{tab:hyperparams-embedprior} list the Type-attentive hyper-parameters that were tuned, and the values that were considered.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        \textit{parameter}          & \textit{values}   \\
+        \cmidrule{1-2}
+        type\_prior\_init\_std         & [0.0, 1.0]     \\
+        type\_nll\_min              & [-20.0, 0.0]      \\
+%        type\_nll\_min\_scale       & [0.01, 100.0]     \\
+%        type\_nll\_min\_damping     & [0.01, 100.0]     \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:hyperparams-embedprior}
+    \caption[The hyper-parameters relating to the Type-embedprior method.]{The hyper-parameters relating to the Type-embedprior method.}
+\end{table}
+
+
+
+\newpage
+\section{Additional performance metrics of hyper-parameter search}
+\setcounter{table}{0}
+\begin{table}
+    \def\fn{\hspace{2pt}} % footnote columns
+    \setlength{\tabcolsep}{5pt}
+    \centering
+    \begin{tabular}{lr@{\fn}lr@{\fn}lr@{\fn}lr@{\fn}l}
+        \toprule
+        \textit{name}
+                &\multicolumn{2}{c}{WN18RR}
+                            &\multicolumn{2}{c}{FB15K-237}   
+                                           & \multicolumn{2}{c}{CoDEx-S}   
+                                                                & \multicolumn{2}{c}{CoDEx-M} \\
+        \cmidrule{1-9}
+        non-semantic         &  5.24    && {21.37}  && 21.13    && 22.14  \\
+        \cmidrule{1-9}
+        type-linkprior-only  & 00.00    &&  9.58	&&  3.09    &&  3.29   \\
+        type-linkprior       &  1.17	&& 23.06    && 23.81    && 19.72    \\
+        \cmidrule{1-9}
+        type-mean            & 72.33    && 23.31    && 35.74    && 30.11  \\
+        type-mean+           &  5.19    && 23.31    && 23.56    && 19.68  \\
+        type-attentive       & -        && \textbf{61.44}    
+                                                    && \textbf{45.87}     
+                                                                && \textbf{44.79}  \\
+        type-attentive-alt   & \textbf{81.05} 
+                                        && 21.13    && 22.03    && 41.35  \\
+        \cmidrule{1-9}
+        type-embedprior      &  6.38    && 22.57    && 25.42    && 21.68  \\
+        \bottomrule
+    \end{tabular} \vspace{1em}
+    \caption[Hits@1 obtained by each method for best set of hyperparameters.]{Hits@1 (\%) obtained by each method for best set of hyperparameters. }\label{tab:hyperparam-search-results3a}
+\end{table}
+
+\begin{table}
+    \def\fn{\hspace{2pt}} % footnote columns
+    \setlength{\tabcolsep}{5pt}
+    \centering
+    \begin{tabular}{lr@{\fn}lr@{\fn}lr@{\fn}lr@{\fn}l}
+        \toprule
+        \textit{name}
+                &\multicolumn{2}{c}{WN18RR}
+                            &\multicolumn{2}{c}{FB15K-237}   
+                                           & \multicolumn{2}{c}{CoDEx-S}   
+                                                                & \multicolumn{2}{c}{CoDEx-M} \\
+        \cmidrule{1-9}
+        non-semantic         & 36.01    && 34.23
+                                                    && 42.88    && 34.27  \\
+        \cmidrule{1-9}
+        type-linkprior-only  & 00.00    && 14.98	&& 11.77    &&  4.78  \\
+        type-linkprior       & 35.78	&& 35.73    && 40.07    && 32.37  \\
+        \cmidrule{1-9}
+        type-mean            & 72.33    && 29.29    && 47.13    && 37.21  \\
+        type-mean+           & 23.88    && 34.90    && 39.60    && 30.67  \\
+        type-attentive       & -        && \textbf{61.44}    
+                                                    && \textbf{75.18}     
+                                                                && 46.86  \\
+        type-attentive-alt   & \textbf{82.22} 
+                                        && 32.79    && 38.81    && \textbf{46.99}  \\
+        \cmidrule{1-9}
+        type-embedprior      & 40.05    && 34.92    && 43.43    && 33.43  \\
+        \bottomrule
+    \end{tabular} \vspace{1em}
+    \caption[Hits@3 obtained by each method for best set of hyperparameters.]{Hits@3 (\%) obtained by each method for best set of hyperparameters. }\label{tab:hyperparam-search-results3b}
+\end{table}
+

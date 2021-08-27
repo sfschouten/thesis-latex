@@ -1,0 +1,502 @@
+@inproceedings{lv_differentiating_2018,
+	location = {Brussels, Belgium},
+	title = {Differentiating Concepts and Instances for Knowledge Graph Embedding},
+	doi = {10.18653/v1/D18-1222},
+	abstract = {Concepts, which represent a group of different instances sharing common properties, are essential information in knowledge representation. Most conventional knowledge embedding methods encode both entities (concepts and instances) and relations as vectors in a low dimensional semantic space equally, ignoring the difference between concepts and instances. In this paper, we propose a novel knowledge graph embedding model named {TransC} by differentiating concepts and instances. Specifically, {TransC} encodes each concept in knowledge graph as a sphere and each instance as a vector in the same semantic space. We use the relative positions to model the relations between concepts and instances (i.e.,{instanceOf}), and the relations between concepts and sub-concepts (i.e., {subClassOf}). We evaluate our model on both link prediction and triple classification tasks on the dataset based on {YAGO}. Experimental results show that {TransC} outperforms state-of-the-art methods, and captures the semantic transitivity for {instanceOf} and {subClassOf} relation. Our codes and datasets can be obtained from https://github.com/davidlvxin/{TransC}.},
+	eventtitle = {{EMNLP} 2018},
+	pages = {1971--1979},
+	booktitle = {Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing},
+    url = "https://www.aclweb.org/anthology/D18-1222",
+	urldate = {2021-03-12},
+	publisher = {Association for Computational Linguistics},
+	author = {Lv, Xin and Hou, Lei and Li, Juanzi and Liu, Zhiyuan},
+	date = {2018-10},
+	keywords = {{TransC}},
+	file = {Full Text PDF:/home/stefan/Zotero/storage/3LI39X5F/Lv et al. - 2018 - Differentiating Concepts and Instances for Knowled.pdf:application/pdf},
+}
+
+
+@inproceedings{krompas_type_constrained_2015,
+	location = {Cham},
+	title = {Type-Constrained Representation Learning in Knowledge Graphs},
+	isbn = {978-3-319-25007-6},
+	doi = {10.1007/978-3-319-25007-6\_37},
+	series = {Lecture Notes in Computer Science},
+	abstract = {Large knowledge graphs increasingly add value to various applications that require machines to recognize and understand queries and their semantics, as in search or question answering systems. Latent variable models have increasingly gained attention for the statistical modeling of knowledge graphs, showing promising results in tasks related to knowledge graph completion and cleaning. Besides storing facts about the world, schema-based knowledge graphs are backed by rich semantic descriptions of entities and relation-types that allow machines to understand the notion of things and their semantic relationships. In this work, we study how type-constraints can generally support the statistical modeling with latent variable models. More precisely, we integrated prior knowledge in form of type-constraints in various state of the art latent variable approaches. Our experimental results show that prior knowledge on relation-types significantly improves these models up to 77\% in link-prediction tasks. The achieved improvements are especially prominent when a low model complexity is enforced, a crucial requirement when these models are applied to very large datasets. Unfortunately, type-constraints are neither always available nor always complete e.g., they can become fuzzy when entities lack proper typing. We show that in these cases, it can be beneficial to apply a local closed-world assumption that approximates the semantics of relation-types based on observations made in the data.},
+	pages = {640--655},
+	booktitle = {The Semantic Web - {ISWC} 2015},
+	publisher = {Springer International Publishing},
+	author = {Krompaß, Denis and Baier, Stephan and Tresp, Volker},
+	editor = {Arenas, Marcelo and Corcho, Oscar and Simperl, Elena and Strohmaier, Markus and d'Aquin, Mathieu and Srinivas, Kavitha and Groth, Paul and Dumontier, Michel and Heflin, Jeff and Thirunarayan, Krishnaprasad and Thirunarayan, Krishnaprasad and Staab, Steffen},
+	date = {2015},
+	langid = {english},
+	keywords = {Knowledge graph, Representation learning, Latent variable models, Link-prediction, Local closed-world assumption, Type-constraints},
+}
+% file = {Springer Full Text PDF:/home/stefan/Zotero/storage/DLC84MMA/Krompaß et al. - 2015 - Type-Constrained Representation Learning in Knowle.pdf:application/pdf},
+
+@article{guan_knowledge_2019,
+	title = {Knowledge graph embedding with concepts},
+	volume = {164},
+	issn = {0950-7051},
+	doi = {10.1016/j.knosys.2018.10.008},
+	abstract = {Knowledge graph embedding aims to embed the entities and relationships of a knowledge graph in low-dimensional vector spaces, which can be widely applied to many tasks. Existing models for knowledge graph embedding primarily concentrate on entity–relation–entitytriplets, or interact with the text corpus. However, triplets are less informative, and the in-domain text corpus is not always available, making the embedding results deviate from the actual meaning. At the same time, our mental world contains many concepts about worldly facts. For human cognition, compared to knowledge that we learned, common-sense concepts are more basic and general, and they play important roles in human knowledge accumulation. In this paper, based on common-sense concepts information of entities from a concept graph, we propose a Knowledge Graph Embedding with Concepts ({KEC}) model that embeds entities and concepts of entities jointly into a semantic space. The fact triplets from a knowledge graph are adjusted by the common-sense concept information of entities from a concept graph. Our model not only focuses on the relevance between entities but also focuses on their concepts. Thus, this model offers precise semantic embedding. We evaluate our method on the tasks of knowledge graph completion and entity classification. Experimental results show that our model outperforms other baselines on the two tasks.},
+	pages = {38--44},
+	journaltitle = {Knowledge-Based Systems},
+	shortjournal = {Knowledge-Based Systems},
+	author = {Guan, Niannian and Song, Dandan and Liao, Lejian},
+	url = {https://www.sciencedirect.com/science/article/pii/S0950705118304945},
+    urldate = {2021-03-12},
+	date = {2019-01-15},
+	langid = {english},
+	keywords = {Concept space, Knowledge graph completion, Knowledge graph embedding},
+	file = {ScienceDirect Full Text PDF:/home/stefan/Zotero/storage/HRYFLLK8/Guan et al. - 2019 - Knowledge graph embedding with concepts.pdf:application/pdf;ScienceDirect Snapshot:/home/stefan/Zotero/storage/3GI7PDT9/S0950705118304945.html:text/html},
+}
+%	
+
+@inproceedings{kingma_improved_2016,
+	location = {Red Hook, {NY}, {USA}},
+	title = {Improved variational inference with inverse autoregressive flow},
+	isbn = {978-1-5108-3881-9},
+	series = {{NIPS}'16},
+	abstract = {The framework of normalizing flows provides a general strategy for flexible variational inference of posteriors over latent variables. We propose a new type of normalizing flow, inverse autoregressive flow ({IAF}), that, in contrast to earlier published flows, scales well to high-dimensional latent spaces. The proposed flow consists of a chain of invertible transformations, where each transformation is based on an autoregressive neural network. In experiments, we show that {IAF} significantly improves upon diagonal Gaussian approximate posteriors. In addition, we demonstrate that a novel type of variational autoencoder, coupled with {IAF}, is competitive with neural autoregressive models in terms of attained log-likelihood on natural images, while allowing significantly faster synthesis.},
+	pages = {4743--4751},
+	booktitle = {Proceedings of the 30th International Conference on Neural Information Processing Systems},
+	publisher = {Curran Associates Inc.},
+	author = {Kingma, Diederik P. and Salimans, Tim and Jozefowicz, Rafal and Chen, Xi and Sutskever, Ilya and Welling, Max},
+	urldate = {2021-05-25},
+	date = {2016-12-05},
+	file = {Full Text PDF:/home/stefan/Zotero/storage/EHHCP4XF/Kingma et al. - 2016 - Improved variational inference with inverse autore.pdf:application/pdf},
+}
+
+@ARTICLE{kge_survey_2017,
+  author={Q. {Wang} and Z. {Mao} and B. {Wang} and L. {Guo}},
+  journal={IEEE Transactions on Knowledge and Data Engineering}, 
+  title={Knowledge Graph Embedding: A Survey of Approaches and Applications}, 
+  year={2017},
+  volume={29},
+  number={12},
+  pages={2724-2743},
+  doi={10.1109/TKDE.2017.2754499}
+}
+
+@Article{Paulheim2017,
+    author={Paulheim, Heiko},
+    title={Knowledge graph refinement: A survey of approaches and evaluation methods},
+    journal={Semantic Web},
+    year={2017},
+    publisher={IOS Press},
+    volume={8},
+    pages={489-508},
+    keywords={Knowledge graphs; refinement; completion; correction; error detection; evaluation},
+    abstract={In the recent years, different Web knowledge graphs, both free and commercial, have been created. While Google coined the term ``Knowledge Graph'' in 2012, there are also a few openly available knowledge graphs, with DBpedia, YAGO, and Freebase being among the most prominent ones. Those graphs are often constructed from semi-structured knowledge, such as Wikipedia, or harvested from the web with a combination of statistical and linguistic methods. The result are large-scale knowledge graphs that try to make a good trade-off between completeness and correctness. In order to further increase the utility of such knowledge graphs, various refinement methods have been proposed, which try to infer and add missing knowledge to the graph, or identify erroneous pieces of information. In this article, we provide a survey of such knowledge graph refinement approaches, with a dual look at both the methods being proposed as well as the evaluation methodologies used.},
+    note={3},
+    issn={2210-4968},
+    doi={10.3233/SW-160218},
+    url={https://doi.org/10.3233/SW-160218}
+}
+%    
+
+@article{noy_industry-scale_2019,
+  title = {Industry-Scale {{Knowledge Graphs}}: {{Lessons}} and {{Challenges}}: {{Five}} Diverse Technology Companies Show How It's Done},
+  shorttitle = {Industry-Scale {{Knowledge Graphs}}},
+  author = {Noy, Natasha and Gao, Yuqing and Jain, Anshu and Narayanan, Anant and Patterson, Alan and Taylor, Jamie},
+  date = {2019-04-01},
+  journaltitle = {Queue},
+  shortjournal = {Queue},
+  volume = {17},
+  pages = {Pages 20:48--Pages 20:75},
+  issn = {1542-7730},
+  doi = {10.1145/3329781.3332266},
+  abstract = {This article looks at the knowledge graphs of five diverse tech companies, comparing the similarities and differences in their respective experiences of building and using the graphs, and discussing the challenges that all knowledge-driven enterprises face today. The collection of knowledge graphs discussed here covers the breadth of applications, from search, to product descriptions, to social networks.},
+  file = {/home/stefan/Zotero/storage/A99DK5W2/Noy et al. - 2019 - Industry-scale Knowledge Graphs Lessons and Chall.pdf},
+  number = {2}
+}
+
+
+
+%
+
+
+@report{hitzler_owl_2012,
+	title = {{OWL} 2 Web Ontology Language Primer (Second Edition)},
+	institution = {W3C},
+	author = {Hitzler, Pascal and Krötzsch, Markus and Parsia, Bijan and Patel-Schneider, Peter and Rudolph, Sebastian},
+	date = {2012-12},
+}
+
+@Article{bordes-etal-2014-semantic-energy,
+    author={Bordes, Antoine
+    and Glorot, Xavier
+    and Weston, Jason
+    and Bengio, Yoshua},
+    title={A semantic matching energy function for learning with multi-relational data},
+    journal={Machine Learning},
+    year={2014},
+    month={Feb},
+    day={01},
+    volume={94},
+    number={2},
+    pages={233-259},
+    abstract={Large-scale relational learning becomes crucial for handling the huge amounts of structured data generated daily in many application domains ranging from computational biology or information retrieval, to natural language processing. In this paper, we present a new neural network architecture designed to embed multi-relational graphs into a flexible continuous vector space in which the original data is kept and enhanced. The network is trained to encode the semantics of these graphs in order to assign high probabilities to plausible components. We empirically show that it reaches competitive performance in link prediction on standard datasets from the literature as well as on data from a real-world knowledge base (WordNet). In addition, we present how our method can be applied to perform word-sense disambiguation in a context of open-text semantic parsing, where the goal is to learn to assign a structured meaning representation to almost any sentence of free text, demonstrating that it can scale up to tens of thousands of nodes and thousands of types of relation.},
+    issn={1573-0565},
+    doi={10.1007/s10994-013-5363-6},
+    url={https://doi.org/10.1007/s10994-013-5363-6}
+}
+%    
+
+@inproceedings{guo_semantically_2015,
+	location = {Beijing, China},
+	title = {Semantically Smooth Knowledge Graph Embedding},
+	url = {https://www.aclweb.org/anthology/P15-1009},
+	doi = {10.3115/v1/P15-1009},
+	eventtitle = {{ACL}-{IJCNLP} 2015},
+	pages = {84--94},
+	booktitle = {Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)},
+	publisher = {Association for Computational Linguistics},
+	author = {Guo, Shu and Wang, Quan and Wang, Bin and Wang, Lihong and Guo, Li},
+	urldate = {2021-03-12},
+	date = {2015-07},
+	file = {Full Text PDF:/home/stefan/Zotero/storage/U643H4CI/Guo et al. - 2015 - Semantically Smooth Knowledge Graph Embedding.pdf:application/pdf},
+}
+% JECI
+@InProceedings{zhou2020jeci,
+    author="Zhou, Jing
+    and Wang, Peng
+    and Pan, Zhe
+    and Xu, Zhongkai",
+    editor="Wang, Xin
+    and Lisi, Francesca Alessandra
+    and Xiao, Guohui
+    and Botoeva, Elena",
+    title="JECI: A Joint Knowledge Graph Embedding Model for Concepts and Instances",
+    booktitle="Semantic Technology",
+    year="2020",
+    publisher="Springer International Publishing",
+    address="Cham",
+    pages="82--98",
+    abstract="Concepts and instances are important parts in knowledge graphs, but most knowledge graph embedding models treat them as entities equally, that leads to inaccurate embeddings of concepts and instances. Aiming to address this problem, we propose a novel knowledge graph embedding model called JECI to jointly embed concepts and instances. First, JECI organizes concepts in the knowledge graph as a hierarchical tree, which maps concepts to a tree. Meanwhile, for an instance, JECI generates a context vector to represent the neighbor context in the knowledge graph. Then, based on the context vector and supervision information generated from the hierarchical tree, an embedding learner is designed to precisely locate an instance in embedding space from the coarse-grained to the fine-grained. A prediction function, as the form of convolution, is designed to predict concepts of different granularities that an instance belongs to. In this way, concepts and instances are jointly embedded, and hierarchical structure is preserved in embedds. Especially, JECI can handle the complex relation by incorporating neighbor information of instances. JECI is evaluated by link prediction and triple classification on real world data. Experimental results demonstrate that it outperforms state-of-the-art models in most cases.",
+    isbn="978-3-030-41407-8"
+}
+
+%JECI++
+@article{wang2020jeci,
+    title = {JECI++: A Modified Joint Knowledge Graph Embedding Model for Concepts and Instances},
+    journal = {Big Data Research},
+    pages = {100160},
+    year = {2020},
+    issn = {2214-5796},
+    doi = {10.1016/j.bdr.2020.100160}, % https://doi.org/
+    author = {Peng Wang and Jing Zhou},
+    keywords = {Knowledge graph, Embedding, Hierarchical tree, Neighbor context, Circular convolution},
+    abstract = {Concepts and instances are important parts in knowledge graphs, but most knowledge graph embedding models treat them as entities equally, that leads to inaccurate embeddings of concepts and instances. Aiming to solve this problem, we propose a novel knowledge graph embedding model called JECI++ to jointly embed concepts and instances. First, JECI++ simplifies hierarchical concepts based on subClassOf relation and instanceOf relation, then re-links instances to the simplified concepts as new instanceOf triples. Consequently, an instance can be obtained by its neighbor instances and its belonging simplified concepts. Second, circular convolution is utilized to locate an instance in the embedding space, based on neighbor instances and simplified concepts. Finally, simplified concepts and instances are jointly embedded by the embeddings learner with CBOW (Continuous Bag-of-Words) or Skip-Gram strategies. Especially, JECI++ can alleviate the problem of complex relations by incorporating neighbor information of instances. JECI++ is evaluated by link prediction and triple classification on real world datasets. Experimental results demonstrate that it outperforms state-of-the-art models in most cases.},
+    url = {https://www.sciencedirect.com/science/article/pii/S2214579620300289},
+}
+%    
+
+% JOIE
+@inproceedings{hao2019joie,
+    author = {Hao, Junheng and Chen, Muhao and Yu, Wenchao and Sun, Yizhou and Wang, Wei},
+    title = {Universal Representation Learning of Knowledge Bases by Jointly Embedding Instances and Ontological Concepts},
+    year = {2019},
+    isbn = {9781450362016},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    doi = {10.1145/3292500.3330838},
+    abstract = {Many large-scale knowledge bases simultaneously represent two views of knowledge graphs (KGs): an ontology view for abstract and commonsense concepts, and an instance view for specific entities that are instantiated from ontological concepts. Existing KG embedding models, however, merely focus on representing one of the two views alone. In this paper, we propose a novel two-view KG embedding model, JOIE, with the goal to produce better knowledge embedding and enable new applications that rely on multi-view knowledge. JOIE employs both cross-view and intra-view modeling that learn on multiple facets of the knowledge base. The cross-view association model is learned to bridge the embeddings of ontological concepts and their corresponding instance-view entities. The intra-view models are trained to capture the structured knowledge of instance and ontology views in separate embedding spaces, with a hierarchy-aware encoding technique enabled for ontologies with hierarchies. We explore multiple representation techniques for the two model components and investigate with nine variants of JOIE. Our model is trained on large-scale knowledge bases that consist of massive instances and their corresponding ontological concepts connected via a (small) set of cross-view links. Experimental results on public datasets show that the best variant of JOIE significantly outperforms previous models on instance-view triple prediction task as well as ontology population on ontology-view KG. In addition, our model successfully extends the use of KG embeddings to entity typing with promising performance.},
+    booktitle = {Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
+    pages = {1709–1719},
+    numpages = {11},
+    keywords = {knowledge graph, ontology learning, relational embeddings},
+    location = {Anchorage, AK, USA},
+    series = {KDD '19},
+    url = {https://doi.org/10.1145/3292500.3330838},
+}
+%    
+
+
+@inproceedings{he_learning_2015,
+  title = {Learning to {{Represent Knowledge Graphs}} with {{Gaussian Embedding}}},
+  booktitle = {Proceedings of the 24th {{ACM International}} on {{Conference}} on {{Information}} and {{Knowledge Management}}},
+  author = {He, Shizhu and Liu, Kang and Ji, Guoliang and Zhao, Jun},
+  date = {2015-10-17},
+  pages = {623--632},
+  publisher = {{Association for Computing Machinery}},
+  location = {{New York, NY, USA}},
+  doi = {10.1145/2806416.2806502},
+  abstract = {The representation of a knowledge graph (KG) in a latent space recently has attracted more and more attention. To this end, some proposed models (e.g., TransE) embed entities and relations of a KG into a "point" vector space by optimizing a global loss function which ensures the scores of positive triplets are higher than negative ones. We notice that these models always regard all entities and relations in a same manner and ignore their (un)certainties. In fact, different entities and relations may contain different certainties, which makes identical certainty insufficient for modeling. Therefore, this paper switches to density-based embedding and propose KG2E for explicitly modeling the certainty of entities and relations, which learn the representations of KGs in the space of multi-dimensional Gaussian distributions. Each entity/relation is represented by a Gaussian distribution, where the mean denotes its position and the covariance (currently with diagonal covariance) can properly represent its certainty. In addition, compared with the symmetric measures used in point-based methods, we employ the KL-divergence for scoring triplets, which is a natural asymmetry function for effectively modeling multiple types of relations. We have conducted extensive experiments on link prediction and triplet classification with multiple benchmark datasets (WordNet and Freebase). Our experimental results demonstrate that our method can effectively model the (un)certainties of entities and relations in a KG, and it significantly outperforms state-of-the-art methods (including TransH and TransR).},
+  file = {/home/stefan/Zotero/storage/UKANAC49/He et al. - 2015 - Learning to Represent Knowledge Graphs with Gaussi.pdf},
+  isbn = {978-1-4503-3794-6},
+  keywords = {distributed representation,gaussian embedding,knowledge graph},
+  series = {{{CIKM}} '15}
+}
+
+
+
+
+
+
+@article{bordes_translating_2013,
+  title = {Translating {{Embeddings}} for {{Modeling Multi}}-Relational {{Data}}},
+  author = {Bordes, Antoine and Usunier, Nicolas and Garcia-Duran, Alberto and Weston, Jason and Yakhnenko, Oksana},
+  date = {2013},
+  journaltitle = {Advances in Neural Information Processing Systems},
+  shortjournal = {Adv. Neural Inf. Process. Syst.},
+  volume = {26},
+  url = {https://proceedings.neurips.cc/paper/2013/hash/1cecc7a77928ca8133fa24680a88d2f9-Abstract.html},
+  urldate = {2021-03-12},
+  abstract = {We consider the problem of embedding entities and relationships of multi-relational data in low-dimensional vector spaces. Our objective is to propose a canonical model which is easy to train, contains a reduced number of parameters and can scale up to very large databases. Hence, we propose, TransE, a method which models relationships by interpreting them as translations operating on the low-dimensional embeddings of the entities. Despite its simplicity, this assumption proves to be powerful since extensive experiments show that TransE significantly outperforms state-of-the-art methods in link prediction on two knowledge bases. Besides, it can be successfully trained on a large scale data set with 1M entities, 25k relationships and more than 17M training samples.},
+  file = {/home/stefan/Zotero/storage/YEN7MPX3/Bordes et al. - 2013 - Translating Embeddings for Modeling Multi-relation.pdf;/home/stefan/Zotero/storage/NZFW57R8/1cecc7a77928ca8133fa24680a88d2f9-Abstract.html},
+  langid = {english}
+}
+
+
+
+
+
+@inproceedings{xie2016representation,
+  title={Representation Learning of Knowledge Graphs with Hierarchical Types.},
+  author={Xie, Ruobing and Liu, Zhiyuan and Sun, Maosong},
+  booktitle={IJCAI},
+  pages={2965--2971},
+  year={2016}
+}
+
+@inproceedings{ma2017transt,
+  title={Transt: Type-based multiple embedding representations for knowledge graph completion},
+  author={Ma, Shiheng and Ding, Jianhui and Jia, Weijia and Wang, Kun and Guo, Minyi},
+  booktitle={Joint European Conference on Machine Learning and Knowledge Discovery in Databases},
+  pages={717--733},
+  year={2017},
+  organization={Springer}
+}
+
+
+
+@inproceedings{broscheit_libkge_2020,
+	location = {Online},
+	title = {{LibKGE} - A knowledge graph embedding library for reproducible research},
+	doi = {10.18653/v1/2020.emnlp-demos.22},
+	abstract = {{LibKGE} ( https://github.com/uma-pi1/kge ) is an open-source {PyTorch}-based library for training, hyperparameter optimization, and evaluation of knowledge graph embedding models for link prediction. The key goals of {LibKGE} are to enable reproducible research, to provide a framework for comprehensive experimental studies, and to facilitate analyzing the contributions of individual components of training methods, model architectures, and evaluation methods. {LibKGE} is highly configurable and every experiment can be fully reproduced with a single configuration file. Individual components are decoupled to the extent possible so that they can be mixed and matched with each other. Implementations in {LibKGE} aim to be as efficient as possible without leaving the scope of Python/Numpy/{PyTorch}. A comprehensive logging mechanism and tooling facilitates in-depth analysis. {LibKGE} provides implementations of common knowledge graph embedding models and training methods, and new ones can be easily added. A comparative study (Ruffinelli et al., 2020) showed that {LibKGE} reaches competitive to state-of-the-art performance for many models with a modest amount of automatic hyperparameter tuning.},
+	pages = {165--174},
+	booktitle = {Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: System Demonstrations},
+	publisher = {Association for Computational Linguistics},
+	author = {Broscheit, Samuel and Ruffinelli, Daniel and Kochsiek, Adrian and Betz, Patrick and Gemulla, Rainer},
+	url = {https://www.aclweb.org/anthology/2020.emnlp-demos.22},
+    urldate = {2021-05-25},
+	date = {2020-10},
+	file = {Full Text PDF:/home/stefan/Zotero/storage/EI2IPK4W/Broscheit et al. - 2020 - LibKGE - A knowledge graph embedding library for r.pdf:application/pdf},
+}
+%	
+
+
+@inproceedings{ruffinelli_you_2019,
+	title = {You {CAN} Teach an Old Dog New Tricks! On Training Knowledge Graph Embeddings},
+	abstract = {We study the impact of training strategies on the performance of knowledge graph embeddings.},
+	eventtitle = {International Conference on Learning Representations},
+	author = {Ruffinelli, Daniel and Broscheit, Samuel and Gemulla, Rainer},
+	url = {https://openreview.net/forum?id=BkxSmlBFvr},
+    urldate = {2021-05-25},
+	date = {2019-09-25},
+	langid = {english},
+	file = {Full Text PDF:/home/stefan/Zotero/storage/8RP3G9AR/Ruffinelli et al. - 2019 - You CAN Teach an Old Dog New Tricks! On Training K.pdf:application/pdf;Snapshot:/home/stefan/Zotero/storage/5K8KP3I8/forum.html:text/html},
+}
+%	
+
+
+@inproceedings{safavi_codex_2020,
+	location = {Online},
+	title = {{CoDEx}: A Comprehensive Knowledge Graph Completion Benchmark},
+	doi = {10.18653/v1/2020.emnlp-main.669},
+	shorttitle = {{CoDEx}},
+	abstract = {We present {CoDEx}, a set of knowledge graph completion datasets extracted from Wikidata and Wikipedia that improve upon existing knowledge graph completion benchmarks in scope and level of difficulty. In terms of scope, {CoDEx} comprises three knowledge graphs varying in size and structure, multilingual descriptions of entities and relations, and tens of thousands of hard negative triples that are plausible but verified to be false. To characterize {CoDEx}, we contribute thorough empirical analyses and benchmarking experiments. First, we analyze each {CoDEx} dataset in terms of logical relation patterns. Next, we report baseline link prediction and triple classification results on {CoDEx} for five extensively tuned embedding models. Finally, we differentiate {CoDEx} from the popular {FB}15K-237 knowledge graph completion dataset by showing that {CoDEx} covers more diverse and interpretable content, and is a more difficult link prediction benchmark. Data, code, and pretrained models are available at https://bit.ly/2EPbrJs.},
+	eventtitle = {{EMNLP} 2020},
+	pages = {8328--8350},
+	booktitle = {Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing ({EMNLP})},
+	publisher = {Association for Computational Linguistics},
+	author = {Safavi, Tara and Koutra, Danai},
+	url = {https://www.aclweb.org/anthology/2020.emnlp-main.669},
+    urldate = {2021-03-12},
+	date = {2020-11},
+	file = {Full Text PDF:/home/stefan/Zotero/storage/TT6ELX2Q/Safavi and Koutra - 2020 - CoDEx A Comprehensive Knowledge Graph Completion .pdf:application/pdf},
+}
+%	
+
+
+@inproceedings{toutanova_representing_2015,
+	location = {Lisbon, Portugal},
+	title = {Representing Text for Joint Embedding of Text and Knowledge Bases},
+	doi = {10.18653/v1/D15-1174},
+	eventtitle = {{EMNLP} 2015},
+	pages = {1499--1509},
+	booktitle = {Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing},
+	publisher = {Association for Computational Linguistics},
+	author = {Toutanova, Kristina and Chen, Danqi and Pantel, Patrick and Poon, Hoifung and Choudhury, Pallavi and Gamon, Michael},
+	url = {https://www.aclweb.org/anthology/D15-1174},
+    urldate = {2021-05-27},
+	date = {2015-09},
+	file = {Full Text PDF:/home/stefan/Zotero/storage/F3BM3B5X/Toutanova et al. - 2015 - Representing Text for Joint Embedding of Text and .pdf:application/pdf},
+}
+%	
+
+
+@inproceedings{dettmers_convolutional_2018,
+	title = {Convolutional 2D Knowledge Graph Embeddings},
+	abstract = {Link prediction for knowledge graphs is the task of predicting missing relationships between entities. Previous work on link prediction has focused on shallow, fast models which can scale to large knowledge graphs. However, these models learn less expressive features than deep, multi-layer models — which potentially limits performance. In this work we introduce {ConvE}, a multi-layer convolutional network model for link prediction, and report state-of-the-art results for several established datasets. We also show that the model is highly parameter efficient, yielding the same performance as {DistMult} and R-{GCN} with 8x and 17x fewer parameters. Analysis of our model suggests that it is particularly effective at modelling nodes with high indegree — which are common in highly-connected, complex knowledge graphs such as Freebase and {YAGO}3. In addition, it has been noted that the {WN}18 and {FB}15k datasets suffer from test set leakage, due to inverse relations from the training set being present in the test set — however, the extent of this issue has so far not been quantified. We find this problem to be severe: a simple rule-based model can achieve state-of-the-art results on both {WN}18 and {FB}15k. To ensure that models are evaluated on datasets where simply exploiting inverse relations cannot yield competitive results, we investigate and validate several commonly used datasets — deriving robust variants where necessary. We then perform experiments on these robust datasets for our own and several previously proposed models, and find that {ConvE} achieves state-of-the-art Mean Reciprocal Rank across all datasets.},
+	eventtitle = {Thirty-Second {AAAI} Conference on Artificial Intelligence},
+	booktitle = {Thirty-Second {AAAI} Conference on Artificial Intelligence},
+	author = {Dettmers, Tim and Minervini, Pasquale and Stenetorp, Pontus and Riedel, Sebastian},
+	url = {https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/17366},
+    urldate = {2021-05-27},
+	date = {2018-04-25},
+	langid = {english},
+	file = {Full Text PDF:/home/stefan/Zotero/storage/UA2DB2T2/Dettmers et al. - 2018 - Convolutional 2D Knowledge Graph Embeddings.pdf:application/pdf;Snapshot:/home/stefan/Zotero/storage/QPDZBAID/17366.html:text/html},
+}
+
+@article{sobol1967distribution,
+  title={On the distribution of points in a cube and the approximate evaluation of integrals},
+  author={Sobol', Il'ya Meerovich},
+  journal={Zhurnal Vychislitel'noi Matematiki i Matematicheskoi Fiziki},
+  volume={7},
+  number={4},
+  pages={784--802},
+  year={1967},
+  publisher={Russian Academy of Sciences, Branch of Mathematical Sciences}
+}
+
+
+@article{rossi_knowledge_2021,
+  title = {Knowledge {{Graph Embedding}} for {{Link Prediction}}: {{A Comparative Analysis}}},
+  shorttitle = {Knowledge {{Graph Embedding}} for {{Link Prediction}}},
+  author = {Rossi, Andrea and Barbosa, Denilson and Firmani, Donatella and Matinata, Antonio and Merialdo, Paolo},
+  date = {2021-01-04},
+  journaltitle = {ACM Transactions on Knowledge Discovery from Data},
+  shortjournal = {ACM Trans. Knowl. Discov. Data},
+  volume = {15},
+  pages = {14:1--14:49},
+  issn = {1556-4681},
+  doi = {10.1145/3424672},
+  abstract = {Knowledge Graphs (KGs) have found many applications in industrial and in academic settings, which in turn, have motivated considerable research efforts towards large-scale information extraction from a variety of sources. Despite such efforts, it is well known that even the largest KGs suffer from incompleteness; Link Prediction (LP) techniques address this issue by identifying missing facts among entities already in the KG. Among the recent LP techniques, those based on KG embeddings have achieved very promising performance in some benchmarks. Despite the fast-growing literature on the subject, insufficient attention has been paid to the effect of the design choices in those methods. Moreover, the standard practice in this area is to report accuracy by aggregating over a large number of test facts in which some entities are vastly more represented than others; this allows LP methods to exhibit good results by just attending to structural properties that include such entities, while ignoring the remaining majority of the KG. This analysis provides a comprehensive comparison of embedding-based LP methods, extending the dimensions of analysis beyond what is commonly available in the literature. We experimentally compare the effectiveness and efficiency of 18 state-of-the-art methods, consider a rule-based baseline, and report detailed analysis over the most popular benchmarks in the literature.},
+  file = {/home/stefan/Zotero/storage/WPEFYCSV/Rossi et al. - 2021 - Knowledge Graph Embedding for Link Prediction A C.pdf},
+  keywords = {comparative analysis,knowledge graph embeddings,Knowledge graphs,link prediction},
+  number = {2}
+}
+
+
+
+@online{rezende_taming_2018,
+  title = {Taming {{VAEs}}},
+  author = {Rezende, Danilo Jimenez and Viola, Fabio},
+  date = {2018-10-01},
+  shortjournal = {ArXiv181000597 Cs Stat},
+  url = {http://arxiv.org/abs/1810.00597},
+  urldate = {2021-06-28},
+  abstract = {In spite of remarkable progress in deep latent variable generative modeling, training still remains a challenge due to a combination of optimization and generalization issues. In practice, a combination of heuristic algorithms (such as hand-crafted annealing of KL-terms) is often used in order to achieve the desired results, but such solutions are not robust to changes in model architecture or dataset. The best settings can often vary dramatically from one problem to another, which requires doing expensive parameter sweeps for each new case. Here we develop on the idea of training VAEs with additional constraints as a way to control their behaviour. We first present a detailed theoretical analysis of constrained VAEs, expanding our understanding of how these models work. We then introduce and analyze a practical algorithm termed Generalized ELBO with Constrained Optimization, GECO. The main advantage of GECO for the machine learning practitioner is a more intuitive, yet principled, process of tuning the loss. This involves defining of a set of constraints, which typically have an explicit relation to the desired model performance, in contrast to tweaking abstract hyper-parameters which implicitly affect the model behavior. Encouraging experimental results in several standard datasets indicate that GECO is a very robust and effective tool to balance reconstruction and compression constraints.},
+  archiveprefix = {arXiv},
+  eprint = {1810.00597},
+  eprinttype = {arxiv},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  primaryclass = {cs, stat}
+}
+
+
+@inproceedings{platt_constrained_1987,
+  title = {Constrained Differential Optimization},
+  booktitle = {Proceedings of the 1987 {{International Conference}} on {{Neural Information Processing Systems}}},
+  author = {Platt, John C. and Barr, Alan H.},
+  date = {1987-01-01},
+  pages = {612--621},
+  publisher = {{MIT Press}},
+  location = {{Cambridge, MA, USA}},
+  url = {http://papers.nips.cc/paper/4-constrained-differential-optimization},
+  urldate = {2021-06-01},
+  abstract = {Many optimization models of neural networks need constraints to restrict the space of outputs to a subspace which satisfies external criteria. Optimizations using energy methods yield "forces" which act upon the state of the neural network. The penalty method, in which quadratic energy constraints are added to an existing optimization energy, has become popular recently, but is not guaranteed to satisfy the constraint conditions when there are other forces on the neural model or when there are multiple constraints. In this paper, we present the basic differential multiplier method (BDMM), which satisfies constraints exactly; we create forces which gradually apply the constraints over time, using "neurons" that estimate Lagrange multipliers. The basic differential multiplier method is a differential version of the method of multipliers from Numerical Analysis. We prove that the differential equations locally converge to a constrained minimum. Examples of applications of the differential method of multipliers include enforcing permutation codewords in the analog decoding problem and enforcing valid tours in the traveling salesman problem.},
+  file = {/home/stefan/Zotero/storage/QNA8IBY2/Platt and Barr - Constrained Differential Optimization.pdf},
+  series = {{{NIPS}}'87}
+}
+
+
+
+
+@online{degrave_how_2021,
+  title = {How We Can Make Machine Learning Algorithms Tunable},
+  author = {Degrave, Jonas and Korshunova, Ira},
+  date = {2021-01-30T14:29:00},
+  url = {https://www.engraved.blog/how-we-can-make-machine-learning-algorithms-tunable/},
+  urldate = {2021-06-28},
+  abstract = {In the previous blogpost, we established that machine learning algorithms are often hard to tune, and hopefully explained the mechanism for why gradient descent has difficulty with linear losses. In this blogpost, we will lay out some possible solutions.},
+  file = {/home/stefan/Zotero/storage/CD4HSHPM/how-we-can-make-machine-learning-algorithms-tunable.html},
+  langid = {english},
+  organization = {{Engraved}}
+}
+
+
+
+@article{wang_knowledge_2017,
+  title = {Knowledge {{Graph Embedding}}: {{A Survey}} of {{Approaches}} and {{Applications}}},
+  shorttitle = {Knowledge {{Graph Embedding}}},
+  author = {Wang, Q. and Mao, Z. and Wang, B. and Guo, L.},
+  date = {2017-12},
+  journaltitle = {IEEE Transactions on Knowledge and Data Engineering},
+  shortjournal = {IEEE Trans. Knowl. Data Eng.},
+  volume = {29},
+  pages = {2724--2743},
+  issn = {1558-2191},
+  doi = {10.1109/TKDE.2017.2754499},
+  abstract = {Knowledge graph (KG) embedding is to embed components of a KG including entities and relations into continuous vector spaces, so as to simplify the manipulation while preserving the inherent structure of the KG. It can benefit a variety of downstream tasks such as KG completion and relation extraction, and hence has quickly gained massive attention. In this article, we provide a systematic review of existing techniques, including not only the state-of-the-arts but also those with latest trends. Particularly, we make the review based on the type of information used in the embedding task. Techniques that conduct embedding using only facts observed in the KG are first introduced. We describe the overall framework, specific model design, typical training procedures, as well as pros and cons of such techniques. After that, we discuss techniques that further incorporate additional information besides facts. We focus specifically on the use of entity types, relation paths, textual descriptions, and logical rules. Finally, we briefly introduce how KG embedding can be applied to and benefit a wide variety of downstream tasks such as KG completion, relation extraction, question answering, and so forth.},
+  eventtitle = {{{IEEE Transactions}} on {{Knowledge}} and {{Data Engineering}}},
+  file = {/home/stefan/Zotero/storage/4UZ8GTLK/Wang et al. - 2017 - Knowledge Graph Embedding A Survey of Approaches .pdf;/home/stefan/Zotero/storage/CIRC7R5U/8047276.html},
+  keywords = {continuous vector spaces,graph theory,Graphical models,KG completion,KG embedding,Knowledge discovery,knowledge graph embedding,latent factor models,learning (artificial intelligence),Market research,Matrix decomposition,relation extraction,Semantics,Statistical analysis,Statistical relational learning,Systematics,tensor/matrix factorization models},
+  number = {12}
+}
+
+
+
+@inproceedings{hjelm_learning_2018,
+  title = {Learning Deep Representations by Mutual Information Estimation and Maximization},
+  author = {Hjelm, R. Devon and Fedorov, Alex and Lavoie-Marchildon, Samuel and Grewal, Karan and Bachman, Phil and Trischler, Adam and Bengio, Yoshua},
+  date = {2018-09-27},
+  url = {https://openreview.net/forum?id=Bklr3j0cKX},
+  urldate = {2021-07-02},
+  abstract = {We learn deep representation by maximizing mutual information, leveraging structure in the objective, and are able to compute with fully supervised classifiers with comparable architectures},
+  eventtitle = {International {{Conference}} on {{Learning Representations}}},
+  file = {/home/stefan/Zotero/storage/V2JN2W7H/Hjelm et al. - 2018 - Learning deep representations by mutual informatio.pdf;/home/stefan/Zotero/storage/QE24CFLK/forum.html},
+  langid = {english}
+}
+
+
+
+@article{yang_embedding_2015,
+	title = {Embedding {Entities} and {Relations} for {Learning} and {Inference} in {Knowledge} {Bases}},
+	url = {http://arxiv.org/abs/1412.6575},
+	abstract = {We consider learning representations of entities and relations in KBs using the neural-embedding approach. We show that most existing models, including NTN (Socher et al., 2013) and TransE (Bordes et al., 2013b), can be generalized under a unified learning framework, where entities are low-dimensional vectors learned from a neural network and relations are bilinear and/or linear mapping functions. Under this framework, we compare a variety of embedding models on the link prediction task. We show that a simple bilinear formulation achieves new state-of-the-art results for the task (achieving a top-10 accuracy of 73.2\% vs. 54.7\% by TransE on Freebase). Furthermore, we introduce a novel approach that utilizes the learned relation embeddings to mine logical rules such as "BornInCity(a,b) and CityInCountry(b,c) ={\textgreater} Nationality(a,c)". We find that embeddings learned from the bilinear objective are particularly good at capturing relational semantics and that the composition of relations is characterized by matrix multiplication. More interestingly, we demonstrate that our embedding-based rule extraction approach successfully outperforms a state-of-the-art confidence-based rule mining approach in mining Horn rules that involve compositional reasoning.},
+	urldate = {2021-03-12},
+	journal = {arXiv:1412.6575 [cs]},
+	author = {Yang, Bishan and Yih, Wen-tau and He, Xiaodong and Gao, Jianfeng and Deng, Li},
+	month = aug,
+	year = {2015},
+	note = {arXiv: 1412.6575},
+	keywords = {Computer Science - Computation and Language},
+	annote = {Comment: 12 pages, 4 figures},
+	file = {arXiv Fulltext PDF:C\:\\Users\\stefa\\Zotero\\storage\\N52FDZ2H\\Yang et al. - 2015 - Embedding Entities and Relations for Learning and .pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\stefa\\Zotero\\storage\\QYF65G89\\1412.html:text/html},
+}
+
+
+
+
+@article{nickel_holographic_2016,
+	title = {Holographic {Embeddings} of {Knowledge} {Graphs}},
+	volume = {30},
+	copyright = {Copyright (c)},
+	issn = {2374-3468},
+	url = {https://ojs.aaai.org/index.php/AAAI/article/view/10314},
+	language = {en},
+	number = {1},
+	urldate = {2021-07-03},
+	journal = {Proceedings of the AAAI Conference on Artificial Intelligence},
+	author = {Nickel, Maximilian and Rosasco, Lorenzo and Poggio, Tomaso},
+	month = mar,
+	year = {2016},
+	note = {Number: 1},
+	keywords = {Holographic Embeddings},
+	file = {Full Text PDF:C\:\\Users\\stefa\\Zotero\\storage\\9B2PVXUX\\Nickel et al. - 2016 - Holographic Embeddings of Knowledge Graphs.pdf:application/pdf;Snapshot:C\:\\Users\\stefa\\Zotero\\storage\\55I2TGS5\\10314.html:text/html},
+}

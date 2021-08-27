@@ -1,0 +1,297 @@
+\chapter{Literature Review}
+\label{ch:literature_review}
+% General knowledge graph embedding papers: TransE, DistMult?
+% These should be discussed to a point that it is clear what the widespread approaches 
+% to this problem look like.
+% Then move into papers that include semantics (type / text / visual? / ) 
+
+% Discussion of a paper (from Zobel):
+%  - In short: contribution to the field, limitations, and the questions that they leave open.
+%  - Briefly summarize each paper’s contribution and the evidence used to support the claims.
+%  - Note any shortcomings or features that are of interest.
+%  - For your own reference, note how the work might have been done better.
+%  - For the early versions: think of the writing as a letter to your future self
+
+This chapter will provide an overview of relevant literature. It will start with a few generally applicable Knowledge Graph Embedding (KGE) methods, followed by recent methods that incorporate type-information.
+
+\section{General KGE Methods}
+
+Methods that attempt to incorporate semantics generally do so by modifying existing KGE methods. This section briefly describes some of these existing methods to provide the necessary background for the methods that follow in the rest of the chapter.
+
+A recent survey \mycitep{rossi_knowledge_2021} divides KGE methods used for Link Prediction into three groups: tensor decomposition models, geometric models, and deep learning models. 
+They differ from each other by the way that they calculate scores by which to rank triples on their likelihood of being true. 
+
+\begin{itemize}
+    \item Tensor decomposition models view the Knowledge Graph as a set of adjacency matrices collected into a three-dimensional tensor. They model Link Prediction by decomposing the tensor into a combination of low-dimensional vectors, the embeddings.
+    \item Deep learning models use deep learning techniques such as convolutional or recurrent neural networks to perform Link Prediction, learning embeddings in the process.
+    \item Geometric models interpret relations as a geometric transformation between the head and tail. Using embeddings for the head and tail of triples, the scores are computed as:
+    \begin{align}
+        & score(\vec{h}, \vec{r}, \vec{t}) && = \delta( \tau( \vec{h}, \vec{r}), \vec{t} );
+    \end{align}
+    where $\tau$ is the geometric transformation, and $\delta$ is a distance function.
+\end{itemize}
+%
+Most existing studies on the inclusion of type-information we describe in this chapter are based on Geometric models.
+\newpage
+% \todo[inline]{Explain these are methods not including any semantics. Cite survey for categorization of these methods, introduce concept of Geometric models.}
+
+% \todo[inline]{Lay out different general ideas behind several categories. Phrase TransE as special case.}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%    TransE    %%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Translating embeddings for modeling multi-relational data (TransE) \citep{bordes_translating_2013}}
+TransE is a geometric model that uses translation, it models the task of learning KGEs as follows:
+\begin{align}
+    & \vec{E}_i | \epsilon_i && \simpnt \epsilon_i \\
+%
+    & \vec{R}_j | \rho_j && \simpnt \rho_j \\
+%
+    & score(\vec{h}, \vec{r}, \vec{t}) && = || \vec{h} + \vec{r}, \vec{t} ||
+\end{align}
+Where $\epsilon_i$ and $\rho_j$ are the model parameters used as the embeddings.
+%The methods optimizes by maximizing the marginal likelihood of the triples in $\mathcal{D}^+$.
+
+%By choosing to model the embeddings as deterministic, they avoid all of the difficulties to do with maximizing a marginal likelihood.
+
+%This is a simple way of avoiding the issue of an intractable integral in the marginal likelihood. Because all probability is concentrated on one point, no need to integrate anything. 
+
+
+\subsection{Learning to Represent Knowledge Graphs with Gaussian Embedding (KG2E) \citep{he_learning_2015} } \label{sec:kg2e}
+This method is related to the Geometric Models, but models the embeddings as Gaussian distributed.
+%
+\begin{align}
+    & \vec{E}_i | \mu_i, \Sigma_i
+&& \sim \text{Normal}( \mu_i, \Sigma_i ) 
+\\
+    & \vec{R}_j | \mu_j, \Sigma_j
+&& \sim \text{Normal}( \mu_j, \Sigma_j )
+%
+\intertext{To measure a `distance' between the distributions they either have a asymmetric score based on the KL-Divergence:}
+%
+%    & \tau(\vec{H}, \vec{R}) && \sim \text{Normal}( \mu_h - \mu_t, \Sigma_h + \Sigma_t ),
+%\\
+    & score(\vec{H}, \vec{R}, \vec{T}) && = D_{KL}( \text{Normal}( \mu_h - \mu_t, \Sigma_h + \Sigma_t ), \vec{R} ).
+%
+\intertext{Or a symmetric one, the expected likelihood: }
+%
+    & score(\vec{H}, \vec{R}, \vec{T}) && = \text{Normal}(0; \mu_h - \mu_t - \mu_r, \Sigma_h + \Sigma_t + \Sigma_r ).
+\end{align}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Incorporating type information}
+%These methods incorporate type (class) information.
+
+%%%%%%%%%%%%%%%%%%%%
+%%%              %%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Semantically Smooth Knowledge Graph Embedding \texorpdfstring{\citep{guo_semantically_2015}}{}}
+\label{sec:semantically_smooth_knowledge_graph_embedding}
+
+This method makes use of type information to make the embedding space ``semantically smooth''. Two variants are proposed: Laplacian Eigenmaps and Locally Linear Embedding. The Laplacian Eigenmaps variant is based on the assumption that if two entities are of the same type their embeddings should be close to each other. Locally Linear Embedding assumes that an entity's embedding can be reconstructed from a linear combination of the entity embeddings that belong to the same type.
+
+%The method is empirically evaluated when used in combination with multiple different KGE embedding methods, specifically: TransE \mycitep{bordes_translating_2013}, SME, and SE \mycitep{bordes-etal-2014-semantic-energy}.
+%It achieves a performance increase on the Link Prediction task when compared to the unmodified KGE embedding methods.
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%              %%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{
+    Type-Constrained Representation Learning in Knowledge Graphs
+    \texorpdfstring{\\ \citep{krompas_type_constrained_2015}}{}
+}
+This work utilizes type-information to alter various aspects in the optimization processes of the KGE methods that they include in their study. They use type-constraints known to exist for specific relations, restricting between which types that relation may exist. By ruling out any link of that relation ever existing the models they train can use their parameters to focus on modeling the links that \textit{are} allowed to exist.
+
+Anticipating potentially incomplete or inconsistent type-constraints, they also experiment with approximating the constraints from the data.
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%     TKRL     %%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Representation Learning of Knowledge Graphs with Hierarchical Types (TKRL) \texorpdfstring{\citep{xie2016representation}}{}}
+
+This work introduces a method called Type-embodied Knowledge Representation Learning (TKRL), it learns type-specific representations through projections. For each entity class $z$ it learns a matrix $\mathcal{M}_z$. To obtain the projection matrix $\mathcal{M}_{e_i}$ for an entity $e_i$ it accumulates the matrices for the types that the entity is an instance of.
+\begin{equation}
+    \mathcal{M}_{e_i} | c_{i,1}, c_{i,2}, \dots, c_{i,S} = \sum_{c_{i,z}} \alpha_z \mathcal{M}_{z}
+\end{equation}
+%
+Furthermore the $\mathcal{M}_z$ matrices are themselves recursive aggregations based on all matrices in the hierarchy of the type. These are calculated in one of two ways:
+\begin{equation} 
+    \left. \mathcal{M}_z = \prod_{t=1}^m \mathcal{M}_{z^{(t)}} 
+   \hspace{1em} \middle/ \hspace{1em} 
+   \mathcal{M}_z = \sum_{t=1}^m  \beta_t \mathcal{M}_{z^{(t)}} \right.
+\end{equation}
+%
+It then models the problem as follows:
+\begin{align}
+    & \vec{E}_i | \epsilon_i, \mathcal{M}_{e_i}
+&& \simpnt  \mathcal{M}_{e_i} \epsilon_i \\
+%
+    & \vec{R}_j | \rho_j && \simpnt \rho_j \\
+%
+%    & X^{(k)} | \vec{h}^{(k)}, \vec{r}^{(k)}, \vec{t}^{(k)}
+%&& \sim \text{Bernoulli}( \sigma( d( \vec{h}^{(k)} + \vec{r}^{(k)}, \vec{t}^{(k)} ) ) )
+    & score(\vec{h}, \vec{r}, \vec{t}) && = || \vec{h} + \vec{r}, \vec{t} ||
+\end{align}
+%
+It thus infers $\vec{E}_i$ from $\mathcal{C}_{i,\cdot}$ in a deterministic way. It also uses the type information when constructing the negative samples to train on. Specifically, when changing the head or tail entity in a triple, they increase the probability of selecting heads/tails with the same types.
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%    TransT    %%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{TransT: Type-based multiple embedding representations for knowledge graph completion \texorpdfstring{\citep{ma2017transt}}{}} \label{sec:transt}
+%
+TransT models the entity embeddings as random variables with a discrete distribution. The relation embeddings are deterministic like in TransE.
+\marginnote{We use the $\text{Discrete}(\langle x_1, \dots, x_n \rangle, \vec{p})$ distribution to mean a discrete distribution has that assigns probability $\vec{p}_i$ to element $x_i$. }
+\begin{align}
+    & \vec{E}_i | \epsilon_i^{(1)}, \dots, \epsilon_i^{(n_i)}, \vec{w}_i
+&& \sim \text{Discrete}( \langle \epsilon_i^{(1)}, \dots, \epsilon_i^{(n)} \rangle, \vec{w}_i) \\
+%
+    & \vec{R}_j | \rho_j && \simpnt \rho_j \\
+%
+%    & X^{(k)} | \vec{h}^{(k)}, \vec{r}^{(k)}, \vec{t}^{(k)}
+%&& \sim \text{Bernoulli}( \sigma( d( \vec{h}^{(k)} + \vec{r}^{(k)}, \vec{t}^{(k)} ) ) )
+    & score(\vec{h}, \vec{r}, \vec{t}) && = || \vec{h} + \vec{r}, \vec{t} ||
+\end{align}
+%
+Here $\vec{w}_i$ is a model parameter, it is a vector with the probabilities of each possible value $\vec{E}_i$ might take. 
+The number of possible values $n_i$ is learned using a Chinese Restaurant Process.
+
+Because we now have a non-deterministic set of embeddings, we have the following marginal likelihood:
+\begin{align}\label{eq:transt_marginal_likelihood}
+p(x^{(k)}| h^{(k)}, r^{(k)}, t^{(k)}) &= \underset{\vec{h} \sim \vec{H}^{(k)}}{\mathbb{E}} \left[ 
+            \underset{\vec{t} \sim \vec{T}^{(k)}}{\mathbb{E}} \left[ 
+                p(x^{(k)} | \vec{h}, \vec{r}^{(k)}, \vec{t}) 
+        \right] \right]
+\end{align}
+%
+%\marginnote[]{$p(x|h,r,t) = \sum$}
+%
+Instead of maximizing the likelihood, \citeauthor{ma2017transt} maximizes one of three posteriors. Specifically they use a Margin Ranking Loss between a posterior and the corrupted posterior:
+\marginnote[2em]{We use $x^+$ as short for $X = True$.}
+\begin{align}
+    \mathcal{L} = \begin{cases} 
+        - \ln p({h}   | {r}, {t}, x^+) 
+        + \ln p({h}'  | {r}, {t}, x^+) 
+    &   {h}' \neq {h}
+    \\
+        - \ln p({r}   | {h}, {t}, x^+) 
+        + \ln p({r}'  | {h}, {t}, x^+)
+    &   {r}' \neq {r}
+    \\
+        - \ln p({t}   | {h}, {r}, x^+)
+        + \ln p({t}'  | {h}, {r}, x^+)
+    &   {t}' \neq {t}
+   \end{cases}
+\end{align}
+%
+These posteriors are proportional to the product of the likelihood and a prior which we will define below:
+\begin{align}
+    p({h} | {r}, {t}, x) 
+    \propto 
+    p(x | {h}, {r}, {t})    p({h} | {r}, {t}) 
+\\
+    p({r} | {h}, {t}, x) 
+    \propto 
+    p(x | {h}, {r}, {t})    p({r} | {h}, {t}) 
+\\
+    p({t} | {h}, {r}, x) 
+    \propto 
+    p(x | {h}, {r}, {t})    p({t} | {h}, {r})
+\end{align}
+
+TransT uses type information to estimate the prior.
+Every entity belongs to set of types, from this two sets of \textit{common} types are constructed for every relation. These sets are the types that are used \textit{common}ly in the head/tail of a triple with this relation. They are constructed using a special kind of intersection of sets, which contains all elements that occur with at least a minimum frequency $\rho$ in the sets on which the intersection is performed. 
+
+With these type sets constructed for each entity and relation, the prior is now estimated using the following similarity function $s$ inspired by the Jaccard Index:
+\begin{align}
+s(\mathcal{T}_a, \mathcal{T}_b) = \frac{| \mathcal{T}_a \cap \mathcal{T}_b |}{| \mathcal{T}_a |},
+%
+%    s(r_{head}, h) = \frac{| \tau_{r,head} \cap \tau_{h} |}{| \tau_{r,head} |} ;
+%    s(r_{tail}, t) = \frac{| \tau_{r,tail} \cap \tau_{t} |}{| \tau_{r,tail} |} ;
+%    s(h, t)        = \frac{| \tau_{h} \cap \tau_{t} |}{| \tau_{h} |} 
+\end{align}
+where $\mathcal{T}_a, \mathcal{T}_b$ are type sets. The priors are then given by:
+\begin{align} \label{formula:p_hrt}
+    p(h | r,t)& & &\propto & &s(r_{head}, h)^{\lambda_{head}} & &s(t, h)^{\lambda_{relation}};
+\\  \label{formula:p_rht}
+    p(r | h,t)& & &\propto & &s(r_{head}, h)^{\lambda_{head}} & &s(r_{tail}, t)^{\lambda_{tail}};
+\\  \label{formula:p_thr}
+    p(t | h,r)& & &\propto & &s(r_{tail}, t)^{\lambda_{tail}} & &s(h, t)^{\lambda_{relation}};
+\end{align}
+where $\lambda_{head}, \lambda_{tail}, \lambda_{relation} \in \{ 0, 1 \}$ are hyperparameters\sidenote{Note that expressions like $s(r_{head}, h)$ are shorthands for the similarity between the \textbf{type sets of} $r_{head}$ and $h$. }.
+
+Besides using type information to estimate the prior, TransT also uses type information to determine the number of embeddings each entity should have. To accomplish this it associates each embedding of an entity with a type set, which together, are referred to as that entity's $Semantics$%
+\sidenote{
+    Each type set in an entity's $Semantics$ is meant to represent a different interpretation of that entity. And the embedding associated with each type set is meant to allow the model to learn a representation that encapsulates this different interpretation. 
+    %Note that although the algorithm associates each embedding with a type set, there is nothing about that embedding to actually contains information about the types within its type set.
+}. 
+Before training, each entity $e_i$ has a single embedding, and the type set associated with it that entity's own type set ($Semantics_{e_i} = \{ \mathcal{T}_i \}$).
+%
+During training there is a probability that that the number of embeddings for an entity (being the head or tail of triple in the training data) is increased. This probability is based on the similarity of the different semantics of the head or tail to the types of the entities that are \textit{common}ly used with the triple's relation. For the tail the probability would be:
+\begin{align}
+    p_{new,tail}(h,r,t) =   \left( 1 - \max_{\sigma_i \in Semantics_t} s(\sigma_i, r_{tail}) \right)
+                            \frac{\beta e^{-||r||_1}}{\beta e^{-||r||_1} + p(x | h,r,t)}.
+\end{align}
+When a positive result is sampled from this probability, the type set $r_{tail}$ is used as the type set associated with the new embedding (the new semantic interpretation).
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%              %%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Differentiating Concepts and Instances for Knowledge Graph Embedding \texorpdfstring{\citep{lv_differentiating_2018}}{}}
+This work introduces TransC, which is similar to TransE and other translational methods, but additionally models concepts (types or entity-classes) as circles in the embedding space. 
+They optimize their model such that: 
+entities lie within the circle of the class that they are an instance of; and,
+when a class has a super-class, its circle is contained within the super-class's circle.
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%              %%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Knowledge graph embedding with concepts \texorpdfstring{\citep{guan_knowledge_2019}}{}}
+This work introduces the Knowledge Graph Embeddings with Concepts (KEC) model, which consists of two components. The first component is the concept graph embedding, it is a skip-gram based model, which learns representations of entities and its concepts by trying to predict the 'context' in which they occur. 
+This context is defined as all the entities that share a concept with the entity.
+The study predicts the probability of an entity occurring in the target entity's context using both the dot product between the target entity and potential context entities, as well as the dot product between the entity's concepts and potential context entities.
+
+The second component is the actual knowledge graph embedding, which is based on TransE and utilizes the embeddings from the concept graph embedding to construct a hyperplane representing the concept relevance between entities. 
+To accomplish this the translational difference $\vec{h}+\vec{r}-\vec{t}$ is projected onto the hyperplane to represent how likely this link is given the concept (semantic) relevance.
+The two components are trained consecutively.
+
+%%%%%%%%%%%%%%%%%%%%
+%%%     JOIE     %%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{Universal Representation Learning of Knowledge Bases by Jointly Embedding Instances and Ontological Concepts (JOIE) \texorpdfstring{\citep{hao2019joie}}{}}
+\label{sec:hao2019joie}
+
+This method learns embeddings for concepts (types) as well as entities. Specifically they identify two views: the ontology-view which models concepts and the meta-relations that exists between them; and the instance-view which models entities and their relations. They model the relationship between these two views in one of two ways: by cross-view grouping (CG); or by cross-view transformation (CT). 
+In the first case concepts and entities are embedded in the same space, and a loss-term is introduced to force entities to be close to their corresponding concepts. 
+In the second case (CT) concepts and entities are embedded in separate spaces that are nonetheless aligned by a non-linear transformation with a corresponding loss term. 
+An additional variant is introduced where the ontology-view is made ``hierarchy-aware'' by also modeling the `subclass\_of' meta-relation.
+
+%This framework is empirically evaluated on top of multiple different KGE embedding methods, specifically: TransE \mycitep{bordes_translating_2013}, DistMult \mycitep{yang_embedding_2015}, and HolE \mycitep{nickel_holographic_2016}. Evaluation takes place on the Link Prediction and type-prediction tasks. 
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%              %%%
+%%%%%%%%%%%%%%%%%%%%
+\subsection{A [Modified] Joint Knowledge Graph Embedding Model for Concepts and Instances \texorpdfstring{(JECI[++]) \citep{zhou2020jeci,wang2020jeci}}{}}
+
+This too is a framework for embedding both concepts and entities. 
+In this work the hierarchy of concepts is used to construct `simplified concepts' which are the concepts at the leaves of the concept tree.
+If a dataset links an entity to both a concept and its parent-concept, only the link to the concept that is lowest in the tree, i.e. the simplified concept, is kept.
+
+When embedding an entity, this method computes a context vector from which the embedding is predicted. The context vector is a weighted sum of the embeddings of that entity's neighbors in the Knowledge Graph. 
+Circular convolution between the context vector and a concept embedding is used to predict the location of the concept's sub-concept that this entity is a part of. This is performed recursively until there are no more sub-concepts, then a final convolution predicts the entity's embedding rather than a further sub-concept.
+
+\section*{Overview}
+Each method that incorporates type-information does so with a combination of three techniques:
+using type-information to construct the entity-embeddings; using type-information to directly influence the score assigned to each triple; or using type-information to modify the optimization objective.
+
+What stands out is that many of these methods are already quite complex and are not always compared to simple baselines, making it unclear what the frame of reference should be when judging how well these methods are performing. 
+This seems particularly true for those methods that use type-information to construct the entity-embeddings.

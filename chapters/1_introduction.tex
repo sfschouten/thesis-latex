@@ -1,0 +1,195 @@
+\chapter{Introduction}
+\label{ch:introduction}
+% Make the case for Knowledge Graphs in general.
+% Motivate the use of them in combination with machine/deep learning.
+% Sketch overview of research so far
+% point out that only limited research has been done that tries to incorporate semantics
+% talk about what makes the inclusion of semantics valuable
+% move into talking about what we investigate now
+% give research questions ( / hypotheses ?)
+
+% \todo[inline,caption={}]{
+% \begin{itemize}
+%     \item Capture attention, foreshadow main objective of thesis.
+%     \item General introduction into Knowledge Graphs.
+%     \item Maybe some historical factoids, motivation behind them, etc.
+% \end{itemize}
+% }
+
+Knowledge Graphs represent (real-world) information using a graph-based structure. 
+They are used to represent both domain-specific and general information. Nodes in the graph represent entities, whereas the edges between nodes represent a various kinds of relations that exist between two entities.
+
+Knowledge Graphs are already critical to the operation of large tech companies such as Microsoft, Google and Facebook, where they are used to integrate and manage data from diverse sources at a large scale \mycitep{noy_industry-scale_2019}. 
+%
+Knowledge graphs are also strongly related to concepts in the Semantic Web, the effort to make information on the Internet machine-readable \mycitep{Paulheim2017}. 
+
+Despite their widespread use, knowledge graphs are generally not complete, entities that should be connected by a given relation are often not. Within the field of Artificial Intelligence, research is conducted into a task known as Knowledge Graph Completion. That task's objective is to identify missing facts which should be added to the knowledge graph. When this task is performed primarily using information found within the knowledge graph itself it is also referred to as Link Prediction \mycitep{rossi_knowledge_2021}.
+
+To perform tasks like Link Prediction the Knowledge Graph can be embedded. Traditionally only the Knowledge Graph's syntactical information is incorporated in such an embedding. While this information alone can already model the Knowledge Graph quite well, this thesis will explore ways of also incorporating semantics to improve their performance.
+
+%\todo[inline]{Answer: what is missing in existing link prediction models, what motivated the research, what are we trying to explore}
+
+\paragraph{}\noindent
+In this chapter we will introduce the relevant notation, explain what task this thesis will focus on, and finally we will formulate the exact research question.
+
+\subsection*{Knowledge Graph}
+%
+% Background for notation, not for reader, but so I don't forget.
+% Notation should have mapping into proper probability theory.
+% Sample space (\Omega) is the power set of \mathcal{D}, 2^\mathcal{D}.
+% 
+A Knowledge Graph consists of a set of entities $\mathcal{E} = \{ e_{i} \}$, a set of relations $\mathcal{R} = \{ r_{j} \}$, and a set of facts $\mathcal{D}^+$:
+\marginnote{Note that $\mathcal{D}^+$ only contains observations $X_k = True$. What we assume about $X$ for the triples that are not in $D^+$ determines if we operate under an open- or closed-world assumption. Under an open-world assumption we consider the other $X$'s to be unknown, under a closed-world assumption we consider them to be $False$.}
+\begin{equation}
+    \mathcal{D}^+ \subseteq \mathcal{D} = \mathcal{E} \times \mathcal{R} \times \mathcal{E} =  \{ (e_{head}, r, e_{tail})^{(k)} \} = \{ (h, r, t)^{(k)} \};
+\end{equation}
+which determines which entities are related by what relations. 
+The set $\mathcal{D}^+$ can also be considered as a set of observations of the Boolean random variable:
+\begin{align}
+    & X^{(k)} & &\text{truth value of triple $k$.} 
+% elements of $2^\mathcal{D}$ that have $(h, r, t)^{(k)}$
+\end{align}
+\marginnote[2em]{Here the small $x^{(k)}$ is a value that the random variable $X^{(k)}$ might take (True or False). Throughout this document $\Gamma | a$ is short for $\Gamma | A = a$.}
+%
+%It is often useful to think of the elements of Knowledge Graphs as being (conditional) random variables.
+We can also consider the components of the triples to be random variables. For an arbitrary triple with index $k'$ we might consider the following conditional random variables:
+\begin{equation} \label{eq:ex_cond_rv1}
+    H^{(k')} | x^{(k')}; \hspace{2em} R^{(k')} | x^{(k')}; \hspace{2em} T^{(k')} | x^{(k')} .
+% elements of $2^\mathcal{D}$ that 
+% {H = h | X = x} = { D^+ \elem 2^\mathcal{D} :  }
+\end{equation}
+To avoid notational overload we drop the index whenever we refer to an arbitrary triple, giving simply:
+\begin{equation} \label{eq:ex_cond_rv2}
+    H | x; \hspace{2em} R | x; \hspace{2em} T | x .
+\end{equation}
+Their distribution says something about the likelihood of entities and relations being the Head, Relation, or Tail within a triple with truth value $x$. 
+Here $H$, $T$ and $R$ are categorical random variables with $\mathcal{E}$ and $\mathcal{R}$ as their support respectively. 
+%This also means that when we speak of the values $h^{(k)}, r^{(k)}, t^{(k)}$ that these random variables might take are mere references to the elements of $\mathcal{E}$ and $\mathcal{R}$.
+%And $h^{(k)}, r^{(k)}, t^{(k)}$ are merely references to the entities $e \in \mathcal{E}$ and relations $r \in \mathcal{R}$ that occur in the $k$-th triple in $\mathcal{D}$.
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%   EMBEDDINGS   %%
+%%%%%%%%%%%%%%%%%%%%
+\subsection*{Knowledge Graph Embedding (KGE)}
+% goal of embedding them (use in machine learning)
+% 
+% traditionally to encode structural information only
+
+When we learn an embedding we associate symbols with continuous vector representations. We are concerned with learning such representations for the entities and relations in our Knowledge Graph. We wish to do so in order to use machine learning techniques such as Deep Learning. These techniques can then be used for a range of applications such as Link Prediction, Entity Classification, Relation Extraction, and Question Answering \mycitep{kge_survey_2017}.
+
+When tasked with learning a \gls*{kge}, we (implicitly) postulate additional unobserved multidimensional random variables\sidenote[][2em]{To avoid notational overload once more, we refer to these as simply $\vec{H}, \vec{R}, \vec{T}$ whenever we mean an arbitrary triple, or as $ \vec{H}^{(k)}, \vec{R}^{(k)}, \vec{T}^{(k)}$ when we mean a specific triple's embedding.} for arbitrary triple $k'$:
+\begin{align}
+\vec{H}^{(k')} | H^{(k')} = h^{(k')} ; 
+\hspace{1.5em} 
+\vec{R}^{(k')} | R^{(k')} = r^{(k')} ;
+\hspace{1.5em} 
+\vec{T}^{(k')} | T^{(k')} = t^{(k')} .
+\end{align}
+In other words, we imagine that the truth value for each possible triple was sampled from a distribution $p(x|\vec{h}, \vec{r}, \vec{t})$; where $\vec{h}, \vec{r},$ and $\vec{t}$ were in turn sampled from unknown posterior $p(\vec{h}, \vec{r}, \vec{t}|h,r,t)$. We are interested in approximating that posterior, thereby also gaining access to samples $(\vec{h}, \vec{r}, \vec{t})$ which we can use as the embeddings we seek.
+%
+%\marginnote[-7em]{While the latent embeddings $\vec{E}$ and $\vec{R}$ are continuous random variables with $\mathbb{R}^{D}$ as their support, the variables $E$ and $R$ are categorical, and $X$ is boolean.}
+%
+%\marginnote{There are no independent random variables $\vec{H}^{(k)}, \vec{R}^{(k)}, \vec{T}^{(k)}$, they are merely references to one of the random variables $\vec{E}_i, \vec{R}_i$. Example: $\vec{H}^{(k)} = \vec{E}_{h(k)}$. }
+%
+Because we often model the distribution of the embeddings without considering the position of the entities in a triple, we also define:
+\marginnote{That is to say, we model the posterior $p(\vec{h}, \vec{r}, \vec{t}|h,r,t)$ as $q_e(\vec{h}|h) q_r(\vec{r}|r) q_e(\vec{t}|t)$, i.e. forcing ourselves to use the same approximate posterior for $\vec{H}$ and $\vec{T}$.}
+\begin{align}
+    \vec{E}_i :=\ \vec{H}|H\!=\!e_i\ =\ \vec{T}|T\!=\!e_i % H = e_i \lor T = e_i; 
+    \hspace{1.5em} \text{and} \hspace{1.5em}
+    \vec{R}_j :=\ \vec{R}|R\!=\!r_j .
+\end{align}
+
+%Further, we also define the functions $h(k), r(k), t(k)$ as mappings from the index of a fact $(h,r,t)^{(k)}$ to: the index $i$ of the entity $e_i$ being referenced by $h$ or $t$; or the index $j$ of the relation $r_j$ being referenced by $r$.
+
+When we make modeling decisions we make assumptions about how these random variables are distributed.
+For this we use the following type of notation:
+\begin{align}
+    \vec{E}_i|\theta_i &\sim \text{Distribution}(f(\theta_i));
+%\end{align}
+\intertext{
+where $\theta$ are model parameters.
+Often Knowledge Graph Embeddings are not modeled as a distribution, but are modeled as point estimates. We denote this as follows:
+}
+%\begin{align}
+    \vec{E}_i|\theta_i &\simpnt f(\theta_i);
+\end{align}
+that is to say the embeddings come from a deterministic function.
+
+\subsection*{Semantic Information}
+Frequently Knowledge Graph Embeddings are learned based only on structural (syntactical) information \mycitep{kge_survey_2017}, i.e. which entities are connected by what relations. But the underlying assumption, that the truth value of possible triples can be inferred from syntactical information only, is rather simplifying. 
+The syntactical information might allow us to notice that when an entities connect by relation $r1$ to entity $a$, they often also connect by relation $r2$ to entity $b$. But we are never able to utilize other ways entities might be similar. 
+There are a few distinct sources of semantic information we could use to improve upon this.
+\begin{itemize}
+    \item Often we know Natural Language names of the entities in the Knowledge Graph. These can be seen as a bridge to those languages, this could allow us to utilize models of the semantics of those languages for the Knowledge Graph as well.
+    \item Information of how entities appear (look, sound, behave, etc.) in the real world could help with \textit{inferring} the semantics, since the real world is what we are trying to describe.
+    \item Finally, the entities and relation-types in a Knowledge Graph come from our understanding of the world. One way to improve, is to describe more of that understanding manually by recording semantics in the form of an ontology. 
+\end{itemize}
+It is the latter that will be the focus of this thesis.
+
+\paragraph{Including Ontological Information.} 
+The most prevalent kind of ontological information are groupings of entities into classes.
+For example, we might have access to a set of entity classes $\mathcal{C} = \{ c_s \}$. With corresponding observed random variable:
+\begin{align}
+&    C_{i,s} := C|e_i, c_s    &  &\text{whether entity $i$ is of type (or class) $c_s$.}
+\end{align}
+These entity classes are essentially categories or \textbf{types} of entities, for example the entity `Stefan' could be part of the `Person' type. When including this information in the embedding process we hope that the types an entity falls under are predictive of the truth value of a triple (for example because certain relations generally exist only between entities of certain types).
+
+
+Other kinds of ontological information include \mycitep{hitzler_owl_2012}: %
+\begin{itemize} \setlength\itemsep{0em}
+    \item restrictions, for example on the entity types between which certain relations can exist;
+    \item entity-type and relation hierarchies, for example a `hasCar' relation could be a specific kind of `hasProperty' relation;
+    \item characteristics of relations, for example that a relation is symmetrical, i.e. if (h,r,t) is true then (t,r,h) is also true.
+\end{itemize}
+
+Previous work (\mycite{hao2019joie}; \mycite{zhou2020jeci}; \mycite{wang2020jeci})
+has investigated also embedding the entity-types. 
+One approach is to embed these types in the same space as the entities. 
+In this case we are effectively learning an additional distribution of entity-representations, the difference is that this one is conditioned on the type(s), e.g. $p_i(\vec{e}_i|c_{i,1} \dots c_{i,n_c})$. 
+Alternatively, entity-classes can be embedded in a separate space.
+In both cases related ontological information, like a class hierarchy could also be incorporated.
+
+% \paragraph{}
+% Another kind of semantic information comes in the form of text. We frequently refer to entities and entity-classes by their English name, entities are often associated with a proper noun (`Stefan') and entity classes with a common noun (`person'). 
+% For relations there is often some verb involved, we already saw the example `hasProperty', but we would normally use `owns' to express such a relation. 
+% There are datasets that include either natural language descriptions of entities/relations; or even natural language assertions of given facts (triples). Information like this could be used to regularize training for the link prediction task, but is especially interesting when we are interested in extraction of entities and/or links from text.
+
+%\begin{align}
+%&    M^{(k)}_u             &  &\text{$u$-th symbol (word/character) in mention of $k$-th fact.}
+%\end{align}
+% \paragraph{}
+% In principle there are many more kinds of semantic information. For example we might have visual (images, video, diagrams, etc.) information depicting entities or a state of affairs that implicitly asserts a given fact. Generally for each medium, one can imagine the existence of either assertions of fact, or descriptions of entities and/or relations. But in practice we do not see many (if any\todo{find out}) datasets with information of a kind other than ontological or textual.
+
+
+\subsection*{Research Question}
+Our concern is with `Incorporating semantics in knowledge graph embeddings'. We choose to focus primarily on the incorporation of type-information to improve Link Prediction performance.
+Thus we ask the following research question: \\ 
+\input{snippets/research_question}
+
+To answer this question we will first review existing methods in the literature on this topic in Chapter \ref{ch:literature_review}. 
+In Chapter \ref{ch:methodology} we will describe what methods for incorporating type-information we will investigate.
+Chapter \ref{ch:experiments} will describe the experiments, as well as present and analyze the results. 
+Finally, in Chapter \ref{ch:conclusion} we will discuss our findings, and answer the research questions.
+
+\paragraph{}\noindent
+We find that type-information is highly informative, and when used on its own, can outperform KGEs that do not use types at all. The difficulty is in incorporating the type-information in a KGE along with the other (entity-level) information, such that it has higher Link Prediction performance, and is still suitable for the same use cases (such as entity classification, question answering, etc.).
+
+
+
+%\todo[inline]{Summarize contributions, findings. Outline of thesis with each chapter's content.}
+
+
+% % MOTIVATION
+% \glspl*{kge} (KGEs) aim to represent the entities and relations within a Knowledge Graph using continuous vector representations. This allows them to be utilized more easily for tasks such as Link Prediction, Relation Extraction, and Question Answering.
+% Commonly, these embeddings focus on representing the structure of the Knowledge Graph, but incorporating semantics may increase their utility.
+% % CORE OF METHOD
+% We compare several methods that incorporate an abundantly available form of semantics: type-information.
+% %These methods use a variety of ways to include the type-information, viewing them either as sets of entities with informative statistics, or as objects to be embedded along with the entities and relations.
+% We include an existing method TransT, as well as new methods that either construct entity-embeddings from type-embeddings, or model type-distributions over entity-embeddings.
+% We perform extensive hyper-parameter searches in order to compare the performance of these methods when applied to the Link Prediction task.
+% % MAIN RESULT
+% We observe surprisingly high performance for a class of methods that learned to represent each entity by one of its types, using that type's embedding as the entity's embedding. Other methods result in a modest increase in performance relative to their non-semantic baseline.
+% % TAKEAWAY
+% While it remains challenging to incorporate type-information such that it may benefit more than just Link Prediction, the high performance we observe shows there is great potential in its utilization.

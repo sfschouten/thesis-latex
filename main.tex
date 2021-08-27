@@ -1,0 +1,208 @@
+\documentclass[nobib,a4paper,oneside,openany]{tufte-book}
+
+\hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
+
+%%
+% Book metadata
+%\title{}
+\author{Stefan F. Schouten}
+\publisher{Publisher of This Book}
+
+%%
+% If they're installed, use Bergamo and Chantilly from www.fontsite.com.
+% They're clones of Bembo and Gill Sans, respectively.
+%\IfFileExists{bergamo.sty}{\usepackage[osf]{bergamo}}{}% Bembo
+%\IfFileExists{chantill.sty}{\usepackage{chantill}}{}% Gill Sans
+
+%\usepackage{microtype}
+
+%%
+% Just some sample text
+\usepackage{lipsum}
+
+%%
+% For nicely typeset tabular material
+\usepackage{booktabs}
+
+%%
+% For graphics / images
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+
+\input{packages}
+\input{macros}
+\input{glossary}
+
+
+% Generates the index
+\usepackage{makeidx}
+\makeindex
+
+% set section numbering depth
+\setcounter{secnumdepth}{1}
+
+% remove \todo from \nameref
+\addnamedisablecommand{\todo[2][]}
+% remove \cite from \nameref
+\addnamedisablecommand{\cite[2][]}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  v v v  DOCUMENT  v v v  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Front matter
+\frontmatter
+\begingroup 
+
+\let\cleardoublepage\relax
+\let\clearpage\relax
+
+% blank page
+%\blankpage
+%\begin{fullwidth}
+%\newpage\thispagestyle{empty}
+%\end{fullwidth}
+
+% epigraphs
+%\newpage\thispagestyle{empty}
+%\tmp{
+%    \openepigraph{%
+%        The public is more familiar with bad design than good design.
+%        It is, in effect, conditioned to prefer bad design, 
+%        because that is what it lives with. 
+%        The new becomes threatening, the old reassuring.
+%    }{Paul Rand%, {\itshape Design, Form, and Chaos}
+%    }
+%}
+%\vfill
+%\tmp{
+%\openepigraph{%
+%        A designer knows that he has achieved perfection 
+%        not when there is nothing left to add, 
+%        but when there is nothing left to take away.
+%    }{Antoine de Saint-Exup\'{e}ry}
+%}
+%\vfill
+%\tmp{
+%    \openepigraph{%
+%    \ldots the designer of a new system must not only be the implementor and the first 
+%        large-scale user; the designer should also write the first user manual\ldots 
+%        If I had not participated fully in all these activities, 
+%        literally hundreds of improvements would never have been made, 
+%        because I would never have thought of them or perceived 
+%        why they were important.
+%    }{Donald E. Knuth}
+%}
+
+
+% full title page
+%\maketitle
+\input{title_page}
+
+% abstract
+\newpage
+\begin{fullwidth}
+    \center
+    \thispagestyle{empty}
+    \begin{minipage}[h]{0.7\linewidth}
+        \vspace{5cm}
+        
+        \center
+        \textsc{\Large \textbf{Abstract}}\\[0.5em]
+        
+        \justify
+        % MOTIVATION
+        \glspl*{kge} (KGEs) aim to represent the entities and relations within a Knowledge Graph using continuous vector representations. This allows them to be utilized more easily for tasks such as Link Prediction, Relation Extraction, and Question Answering.
+        Commonly, these embeddings focus on representing the structure of the Knowledge Graph, but incorporating semantics may increase their utility.
+        % CORE OF METHOD
+        We compare several methods that incorporate an abundantly available form of semantics: type-information.
+        We include an existing method, TransT, as well as new methods that either construct entity-embeddings from type-embeddings, or model type-distributions over entity-embeddings.
+        We perform extensive hyper-parameter searches in order to compare the performance of these methods when applied to the Link Prediction task.
+        % MAIN RESULT
+        % surprisingly high performance 
+        We observe up to 261\% increase of MRR against a TransE baseline for a class of methods that learned to represent each entity by one of its types, using that type's embedding as the entity's embedding. Other methods result in a modest increase in performance relative to their non-semantic baseline.
+        % TAKEAWAY
+        While it remains challenging to incorporate type-information such that it may benefit more than just Link Prediction, the high performance we observe shows there is great potential in its utilization.
+    \end{minipage}
+\end{fullwidth}
+
+% copyright page
+%\newpage
+%\begin{fullwidth}
+%    ~\vfill
+%    \thispagestyle{empty}
+%    \setlength{\parindent}{0pt}
+%    \setlength{\parskip}{\baselineskip}
+%    Copyright \copyright\ \the\year\ \thanklessauthor
+%    
+%    %\par\smallcaps{Published by \thanklesspublisher}
+%    \tmp{
+%    \par\smallcaps{tufte-latex.googlecode.com}
+%    }
+%    \tmp{
+%    \par Licensed under the Apache License, Version 2.0 (the ``License''); you may not
+%    use this file except in compliance with the License. You may obtain a copy
+%    of the License at \url{http://www.apache.org/licenses/LICENSE-2.0}. Unless
+%    required by applicable law or agreed to in writing, software distributed
+%    under the License is distributed on an \smallcaps{``AS IS'' BASIS, WITHOUT
+%    WARRANTIES OR CONDITIONS OF ANY KIND}, either express or implied. See the
+%    License for the specific language governing permissions and limitations
+%    under the License.\index{license}
+%    }
+    %\par\textit{First printing, \monthyear}
+%\end{fullwidth}
+
+% contents
+\newpage
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+\newpage
+
+\listoffigures
+\newpage
+
+\listoftables
+
+% preface
+\newpage
+\input{snippets/preface}
+
+%%
+% Start the main matter (normal chapters)
+\endgroup
+\mainmatter
+
+\input{chapters/1_introduction} 
+\input{chapters/2_literature_review} 
+\input{chapters/3_methodology} 
+\input{chapters/4_experiments}
+\input{chapters/5_discussion}
+
+
+\backmatter
+
+\printbibliography
+\newpage
+
+\appendix
+
+\renewcommand\thesection{\Alph{section}}
+\renewcommand{\thetable}{\Alph{section}.\arabic{table}}
+
+\input{chapters/appendix}
+
+\listoftodos
+
+\printindex
+
+\end{document}
